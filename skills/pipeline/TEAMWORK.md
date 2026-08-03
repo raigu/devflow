@@ -35,6 +35,11 @@ those as the panel members instead.
 5. The delegation contract applies **per round**: one deliverable,
    explicit "finished" on delivery, one nudge for silence, then take
    the work inline and record the failure in STATUS.md.
+6. **The deliverable is a FILE, not a message.** Every dispatch names
+   the exact file path the helper must write; the closing message
+   only confirms the path. Helpers routinely go idle without sending
+   anything — a written file makes that silence cost nothing: on the
+   idle signal, read the file.
 
 ## Model per dispatch — chosen by role, never by inheritance
 

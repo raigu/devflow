@@ -91,11 +91,12 @@ On every merge/close/blocked signal (from STATUS.md or the tracker):
 ## Delegation and staleness
 
 When dispatching any helper (subagent, reviewer, teammate session):
-name ONE deliverable and where to deliver it; the helper must
-explicitly declare the task finished when delivering. A silent helper
-gets ONE nudge; after that, do the work here and record the delegation
-failure visibly in PLAN.md. Never assume a helper reported — verify
-the deliverable exists.
+name ONE deliverable and the exact FILE path to write it to — a file
+survives a helper that goes silent; read it on the idle signal. The
+helper must explicitly declare the task finished when delivering. A
+silent helper gets ONE nudge; after that, do the work here and record
+the delegation failure visibly in PLAN.md. Never assume a helper
+reported — verify the deliverable file exists.
 
 A spun-off ticket with no new STATUS.md milestone within the staleness
 threshold is marked **stale** in the status report and surfaced to the

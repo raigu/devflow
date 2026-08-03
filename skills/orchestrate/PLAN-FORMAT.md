@@ -19,7 +19,7 @@ KL-222`, `MR/PR target: main   # language: English`.
 - worktree: gm-worktree add <t>
 - docs dir: sb/<t>/
 - MR/PR target: 503-develop    # language: Estonian
-- staleness threshold: 4h
+- staleness threshold: 4 working hours
 - orchestrator workdir: /home/user
 - started: 2026-08-03
 

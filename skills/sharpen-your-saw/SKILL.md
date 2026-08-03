@@ -21,8 +21,11 @@ logs. Then:
 
 ```
 python3 ${CLAUDE_PLUGIN_ROOT}/scripts/digest.py \
-  --out <scratch dir> [--since <date>] <source paths...>
+  --out <dir> --since <date> <source paths...>
 ```
+
+`--out` = a fresh subdirectory of the session's scratchpad/temp
+directory (`--since` is optional; use it to skip long-dead history).
 
 Digests hold only the human's messages plus counts — raw transcripts
 never enter any context window. Non-zero exit = fix the paths, don't

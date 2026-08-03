@@ -32,12 +32,14 @@ Repos without a remote fall back to the root-path slug.
    `agent teams:` fact — a recorded "declined" is respected, never
    re-asked). Check `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` in the
    session env and in the `env` block of the user's
-   `~/.claude/settings.json`. If not enabled, tell the user in two
-   lines what they lose — /pipeline's specialist panels degrade to
-   one-shot subagents: no peer challenge rounds, no debate-based
-   consensus — and ask whether to turn it on permanently by adding
-   `"CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"` to that `env`
-   block. Edit settings only on an explicit yes; note it is
+   `~/.claude/settings.json`. **Already enabled → record
+   `agent teams: enabled` without asking anything** (an unrecorded
+   fact makes panels silently degrade). If not enabled, tell the
+   user in two lines what they lose — /pipeline's specialist panels
+   degrade to one-shot subagents: no peer challenge rounds, no
+   debate-based consensus — and ask whether to turn it on permanently
+   by adding `"CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"` to that
+   `env` block. Edit settings only on an explicit yes; note it is
    experimental and takes effect in new sessions. Record the answer
    as the `agent teams:` Project fact either way.
 3. Show the **effective current state** per topic — what would apply
@@ -48,19 +50,29 @@ Repos without a remote fall back to the root-path slug.
    - **Ticket**: ID format, fetch command, per-ticket docs dir.
      No tracker? A ticket is then a short name + description the user
      types once — record that.
-   - **Worktree**: exact command(s); environment questions spin-offs
-     must surface (dedicated DB/venv etc.). No-worktree projects run
-     tickets serially in place — record that too.
+   - **Worktree & session start**: exact command(s); environment
+     questions spin-offs must surface (dedicated DB/venv etc.);
+     session naming pattern and any start flags (e.g. `--chrome`,
+     tools that attach only at session start — starting wrong costs a
+     restart); how one session hands to the next (handoff file path,
+     never "see session X"). No-worktree projects run tickets
+     serially in place — record that too.
    - **Shipping**: MR/PR target and language; staleness threshold.
-   - **Defect patterns**: recurring defect classes worth checking at
-     intake and review (e.g. "UTC-vs-local dates — grep date sites"),
-     each with its one-line check.
+   - **Defect patterns**: recurring defect classes — code OR process
+     (e.g. "UTC-vs-local dates — grep date sites"; "open blockers
+     must be reported, not waited on") — each with its one-line
+     check, applied at intake and review.
    - **Phases**: start from the currently-effective map; for each
      phase offer keep / skip / replace / edit, and allow inserting new
      phases and moving gates. Ask whether an existing command or agent
      already covers the phase — record it as `run: /<command>` or an
-     assigned agent on that phase. The RESULT is always a complete
-     map — no patch syntax exists at runtime.
+     assigned agent — and which MODEL each dispatch uses (the
+     TEAMWORK.md ladder; unnamed dispatches inherit the expensive
+     session model). The RESULT is always a complete map — no patch
+     syntax exists at runtime. Before saving, diff the map against
+     the bundled PHASES.md and WARN about default clauses the map
+     loses (e.g. the intake HANDOFF read) — overriding is allowed,
+     losing silently is not.
 5. Write the full PROJECT.md (format below), show it to the user
    before saving. Re-running /adjust later edits the same file.
 

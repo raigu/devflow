@@ -44,7 +44,7 @@ def digest_session(path, since, until, max_chars):
                 obj = json.loads(raw)
             except json.JSONDecodeError:
                 continue
-            if INTERRUPT_RE.search(str(obj.get("message", {}).get("content", ""))[:200]):
+            if INTERRUPT_RE.search(str(obj.get("message", {}).get("content", ""))):
                 interrupts += 1
             if not is_human_message(obj):
                 continue

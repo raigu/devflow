@@ -360,6 +360,47 @@ declined facts — a rejected idea returns only under "previously
 rejected — new evidence") → propose (≤2 lines per item, user picks,
 written the /adjust way).
 
+## Addendum 2026-08-03 — v0.8, first live sharpen-your-saw run + Gemini review
+
+The skill's first real run (gm-is, 55 sessions, 3 harvesters →
+synthesizer → optimizer → 2-lens panel) worked end to end and updated
+the gm-is PROJECT.md (TULD). What it taught, folded back in:
+
+- **Deliverables are FILES now** (TEAMWORK.md rule 6 + both skills'
+  delegation sections): 6 of 7 dispatched helpers went idle without
+  sending their report and delivered only after a nudge; the two
+  panel agents, instructed to write a file first, delivered without
+  nudges. This was also the /insights suggestion the v0.3 contract
+  had only half-adopted.
+- **/adjust preflight auto-records `agent teams: enabled`** when the
+  env already has it — the gm-is config was written with teams on
+  but unrecorded, so every panel silently degraded to blind
+  subagents.
+- **/adjust interviews session-start** (naming, start flags, handoff
+  path) and a **model per phase**; defect patterns explicitly cover
+  code AND process classes; the phases interview now diffs the final
+  map against the bundled default and warns about lost clauses (the
+  gm-is map had silently dropped the intake HANDOFF read — 10
+  sessions of the user typing it by hand).
+- **digest.py** scans full message content for interrupt markers
+  (was first-200-chars); **sharpen-your-saw** names the scratchpad
+  explicitly instead of `<scratch dir>`.
+- **projectkey.sh** falls back to the first remote before the path
+  slug (origin-only assumption broke the shared-key guarantee).
+- **staleness threshold** wording unified ("4 working hours").
+
+Gemini (3.1 Pro, read-only external review) contributed the
+projectkey/digest/staleness/placeholder items; its other findings
+were dismissed with reasons (fable is real; worktime.py's human
+filter is empirically validated; whole-map-not-patch is a decided
+rule; file locking unnecessary for a single-user tool).
+
+Open, deliberately deferred: a bundled SessionStart hook printing the
+ticket's HANDOFF.md path. Previously-rejected-with-new-evidence case
+made (10 misses; decision-log precedent "prose rules are the weakest
+firing mechanism") — but shipping hook files to all plugin users
+needs its own design pass; not rushed into this version.
+
 ## Validation plan
 
 1. `worktime.py` unit-sanity: run against the real July transcripts for
