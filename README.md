@@ -11,6 +11,9 @@ A Claude Code plugin packaging a complete development process:
 - **/adjust** — adapt the pipeline to the project, once — each
   project needs different handling by AI tools in its phases (test
   commands, review agents, shipping rules, the phases themselves).
+- **/sharpen-your-saw** — mine the project's session histories for
+  friction (your corrections, repeated instructions, delegation
+  failures) and turn it into proposed configuration improvements.
 
 Project-agnostic. Conventions resolve in order: your `/adjust`
 config → the project's CLAUDE.md → bundled defaults. Full design and

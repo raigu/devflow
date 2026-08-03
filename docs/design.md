@@ -339,6 +339,27 @@ and the review phase (panel on the diff):
   recorded as the `agent teams:` fact — a recorded "declined" is
   never re-asked.
 
+## Addendum 2026-08-03 — v0.7, /sharpen-your-saw
+
+Fourth skill: continuous improvement of the flow itself. Decisions
+(user-confirmed): scope = current project's transcripts only (all
+its worktrees via the project key); targets = PROJECT.md changes on
+approval + plugin-level notes (reported, never written); data prep =
+`scripts/digest.py`, a stdlib extractor reusing worktime.py's
+human-message filter — digests carry only the human's messages and
+counts (26 real sessions → 120K total), so raw transcripts never
+enter a context window and token cost stays near the
+per-interaction-logging gravestone's spirit.
+
+Stages, all under TEAMWORK.md's mode/model rules: harvest (haiku
+workers → structured friction events) → synthesize (sonnet, ≥2
+independent occurrences or it stays an observation) → optimize
+(opus, exact PROJECT.md lines ranked by user time saved) → review
+(panel + gravestone check: design-doc YAGNI, decision-log Rejected,
+declined facts — a rejected idea returns only under "previously
+rejected — new evidence") → propose (≤2 lines per item, user picks,
+written the /adjust way).
+
 ## Validation plan
 
 1. `worktime.py` unit-sanity: run against the real July transcripts for

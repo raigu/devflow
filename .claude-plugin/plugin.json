@@ -1,7 +1,7 @@
 {
   "name": "devflow",
-  "description": "Development-process plugin: /orchestrate manages a set of tickets (dependency order, worktree spin-offs, merge reactions, progress tracking, estimated-vs-real-hours efficiency), /pipeline drives one ticket session through the full phase lifecycle from intake to merged MR/PR, /adjust configures a personal per-project flow (custom phases, ticket definition, worktree recipe) keyed by git remote.",
-  "version": "0.6.0",
+  "description": "Development-process plugin: /orchestrate manages a set of tickets (dependency order, worktree spin-offs, merge reactions, progress tracking, estimated-vs-real-hours efficiency), /pipeline drives one ticket session through the full phase lifecycle from intake to merged MR/PR, /adjust configures a personal per-project flow (custom phases, ticket definition, worktree recipe) keyed by git remote, /sharpen-your-saw mines the project's session histories for friction and proposes configuration improvements.",
+  "version": "0.7.0",
   "author": {
     "name": "Rait Kapp",
     "email": "raigur@gmail.com"
