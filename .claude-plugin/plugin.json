@@ -1,0 +1,9 @@
+{
+  "name": "orchestrate",
+  "description": "Ticket orchestrator: tracks a set of tickets, maps dependencies, proposes development order, spins tickets off into worktree sessions with handoff files, and measures efficiency (estimated hours vs real deduplicated keyboard time).",
+  "version": "0.1.0",
+  "author": {
+    "name": "Rait Kapp",
+    "email": "raigur@gmail.com"
+  }
+}

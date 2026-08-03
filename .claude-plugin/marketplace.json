@@ -1,0 +1,14 @@
+{
+  "name": "rait-tools",
+  "owner": {
+    "name": "Rait Kapp",
+    "email": "raigur@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "orchestrate",
+      "source": "./",
+      "description": "Ticket orchestrator: dependency-ordered development, worktree spin-offs with handoffs, progress tracking, and estimated-vs-real-hours efficiency reports."
+    }
+  ]
+}
