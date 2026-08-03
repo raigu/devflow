@@ -309,6 +309,36 @@ the user approved all findings (TULD). Changes:
   for a future version if prose checks prove insufficient.
 - README states the email→issue exclusion as deliberate.
 
+## Addendum 2026-08-03 — v0.6, specialist teams in the default phases
+
+Decision (option A of the teams discussion; pass@k racing stays in
+the gravestones as deferred): the default phases gain **dynamic
+specialist teams** — no bundled agent files; a specialist is a prompt
+composed per ticket. New `skills/pipeline/TEAMWORK.md` holds the
+recipe, referenced from the design gate (panel on the decision log)
+and the review phase (panel on the diff):
+
+- **Mode from config, never probed**: /pipeline reads the
+  `agent teams:` Project fact. Enabled → named teammates with a real
+  peer challenge round (the agent-teams feature,
+  `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`, experimental and
+  off-by-default). Declined/unrecorded → k independent blind
+  subagents, the session merges and judges. Consensus is a fixed
+  protocol (independent pass → one challenge round → majority
+  verdict, one adversarial verify for ties, hard stop) — structure,
+  not open-ended chat. Delegation contract applies per round.
+- **Model ladder, no inheritance**: every dispatch names its model —
+  haiku (mechanical) / sonnet (standard lens, the when-unsure
+  default) / opus (hard judgment) / fable (single hardest role, at
+  most one per phase, deliberate escalation only). Rationale:
+  teammates silently inherit the session's model otherwise.
+- **/adjust agent-teams preflight**: checks the env var and the user
+  settings `env` block; if off, states in two lines what /pipeline
+  loses and offers to enable permanently (settings edit only on an
+  explicit yes; experimental; new sessions only). The answer is
+  recorded as the `agent teams:` fact — a recorded "declined" is
+  never re-asked.
+
 ## Validation plan
 
 1. `worktime.py` unit-sanity: run against the real July transcripts for

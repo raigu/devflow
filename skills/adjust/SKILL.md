@@ -28,10 +28,22 @@ Repos without a remote fall back to the root-path slug.
 ## Flow
 
 1. Compute the key; read the existing PROJECT.md if any.
-2. Show the **effective current state** per topic — what would apply
+2. **Agent-teams preflight** (skip if PROJECT.md already records an
+   `agent teams:` fact — a recorded "declined" is respected, never
+   re-asked). Check `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` in the
+   session env and in the `env` block of the user's
+   `~/.claude/settings.json`. If not enabled, tell the user in two
+   lines what they lose — /pipeline's specialist panels degrade to
+   one-shot subagents: no peer challenge rounds, no debate-based
+   consensus — and ask whether to turn it on permanently by adding
+   `"CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"` to that `env`
+   block. Edit settings only on an explicit yes; note it is
+   experimental and takes effect in new sessions. Record the answer
+   as the `agent teams:` Project fact either way.
+3. Show the **effective current state** per topic — what would apply
    right now after resolution (PROJECT.md → project CLAUDE.md →
    bundled defaults) and where each value comes from.
-3. Interview ONLY gaps and things the user wants changed, topic by
+4. Interview ONLY gaps and things the user wants changed, topic by
    topic, one question at a time:
    - **Ticket**: ID format, fetch command, per-ticket docs dir.
      No tracker? A ticket is then a short name + description the user
@@ -49,7 +61,7 @@ Repos without a remote fall back to the root-path slug.
      already covers the phase — record it as `run: /<command>` or an
      assigned agent on that phase. The RESULT is always a complete
      map — no patch syntax exists at runtime.
-4. Write the full PROJECT.md (format below), show it to the user
+5. Write the full PROJECT.md (format below), show it to the user
    before saving. Re-running /adjust later edits the same file.
 
 ## PROJECT.md format
@@ -68,6 +80,7 @@ helper); yours will differ:
 - worktree: gm-worktree add <t>   # ask: --own-db on migrations
 - MR/PR target: 503-develop; language: Estonian
 - staleness threshold: 4h
+- agent teams: enabled          # or: declined 2026-08-03
 
 ## Recurring defect patterns
 - UTC-vs-local dates: grep touched files for date.today()/utcnow()

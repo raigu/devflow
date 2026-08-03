@@ -68,10 +68,14 @@ compaction or resume, and never re-open a Decided or Rejected item.
   and names that command so the line is auditable — e.g.
   `12:05 tests-green — npm test (0 failures)`. Every claim in any
   report must trace to a command output or a file.
-- Delegating to a helper (subagent, review agent): name ONE
+- Delegating to a helper (subagent, review agent, teammate): name ONE
   deliverable and where to deliver it; the helper must explicitly
   declare the task finished. One nudge for a silent helper, then do
   the work inline and record the delegation failure in STATUS.md.
+  Where several perspectives pay (design critique, review), use the
+  specialist-team recipe in [TEAMWORK.md](TEAMWORK.md); its model
+  ladder (name a model on every dispatch, never inherit) applies to
+  ALL helper dispatches.
 - An orchestrator line in STATUS.md (e.g. `orchestrator: <t> merged —
   rebase`) is acted on at the next phase boundary, not ignored.
 - Findings outside the handoff's scope boundaries: STOP, record in

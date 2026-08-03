@@ -27,7 +27,10 @@ strongest case that this ticket needs NO code — already solved,
 solvable by configuration, or not worth its cost. Dispatch the
 project's critic agent for this when the phase map names one,
 otherwise make the case yourself. "Closed as unnecessary" is a win,
-not a failure.
+not a failure. For a non-trivial design, run the decision log and
+scenarios past a specialist panel before presenting the gate —
+recipe, consensus protocol, and model ladder in
+[TEAMWORK.md](TEAMWORK.md).
 Maintain a decision log (Decided / Open / Rejected — each rejection
 with its reason). Express every behaviour change as a Given/When/Then
 scenario. Present the decisions and the list of acceptance tests the
@@ -61,8 +64,10 @@ build files, confirm it with the user once, then reuse it.
 ## 5. Review
 
 Run the project's review mechanisms (review agents, spec-conformance
-checks, linters); if the project defines none, do a deliberate
-self-review pass. Fix or explicitly accept every finding.
+checks, linters); if the project defines none, run a specialist panel
+on the diff per [TEAMWORK.md](TEAMWORK.md) — a deliberate self-review
+pass suffices only for trivial diffs. Fix or explicitly accept every
+finding.
 **Exit:** no unaddressed findings.
 
 ## 6. Evidence
