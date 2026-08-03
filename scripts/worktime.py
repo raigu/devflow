@@ -8,7 +8,7 @@ out automatically. Intervals from all given sources are merged onto one
 timeline (union), so time spent driving several sessions in parallel is
 counted once — that union is the "real hours" figure.
 
-Sources are given as working-directory paths (e.g. /home/gm-is/gm-is-613)
+Sources are given as working-directory paths (e.g. ~/myrepo-613)
 or as NAME=PATH pairs to control the label in the report. Paths are
 resolved to transcript directories under ~/.claude/projects/.
 

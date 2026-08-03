@@ -1,6 +1,6 @@
 ---
 name: pipeline
-description: Drives one ticket session through the full delivery lifecycle — intake, design gate, failing acceptance tests, implementation, review, evidence, MR, CI, merge, close — with exactly two human gates (design approval, ship go-signal). Use when a ticket session starts (a HANDOFF.md says to run it), or when the user says "pipeline", "run the pipeline", or "ship this ticket".
+description: Drives one ticket session through the full delivery lifecycle — intake, design gate, failing acceptance tests, implementation, review, evidence, MR/PR, CI, merge, close — stopping only at the gates the phase map marks. Use when a ticket session starts (a HANDOFF.md says to run it), or when the user says "pipeline", "run the pipeline", or "ship this ticket".
 ---
 
 # Pipeline
@@ -13,12 +13,18 @@ standalone on any ticket.
 
 Resolve the phase map in this order and tell the user which applies:
 
-1. The project's CLAUDE.md phase map, when it defines one — followed
-   verbatim, including its specialist agents per phase.
+1. The project's CLAUDE.md, when it defines a phase map — recognized
+   by a section titled `Development Phases` / `Phases`, or any section
+   the CLAUDE.md itself calls the phase map. Followed verbatim,
+   including its numbering, specialist agents, and gates. If the
+   project map doesn't mark its gates, propose gate placement in the
+   phase plan and let the user fix it.
 2. Otherwise the bundled default: [PHASES.md](PHASES.md).
 
-Quote phase names and exit criteria from the file. Never paraphrase a
-phase rule from memory — re-read the file after any compaction.
+Quote phase names, gates, and exit criteria from the file. Never
+paraphrase a phase rule from memory — re-read the file after any
+compaction. Likewise re-read the ticket's decision log after any
+compaction or resume, and never re-open a Decided or Rejected item.
 
 ## Startup
 
@@ -27,7 +33,8 @@ phase rule from memory — re-read the file after any compaction.
    reporting contract. Re-verify its code anchors before relying on
    them; they go stale as the base branch moves.
 2. Read the project's CLAUDE.md for conventions: test commands, commit
-   rules, MR target and language, guardrails.
+   rules, MR/PR target and language, guardrails, documented recurring
+   defect patterns.
 3. If a `STATUS.md` reporting contract applies, write its `started`
    line IMMEDIATELY — before any other work.
 4. Present the phase plan: the resolved phase list, each with goal +
@@ -38,22 +45,37 @@ phase rule from memory — re-read the file after any compaction.
 
 - Announce each phase entry in two lines: which phase, and its exit
   criteria. No longer.
-- Stop for the user ONLY at the two gates — design approval (end of
-  phase 2) and the ship go-signal (phase 7). Everything else proceeds
-  autonomously; blockers are reported, not silently worked around.
+- Stop for the user ONLY at the gates the resolved phase map marks
+  (bundled default: design approval and the ship go-signal).
+  Everything else proceeds autonomously; blockers are reported, not
+  silently worked around.
 - On each phase transition, append a timestamped milestone to
   `STATUS.md` (e.g. `design-approved`, `tests-red`, `tests-green`,
-  `review-clean`, `evidence-ready`, `mr-proposed !N`, `merged`,
-  `blocked: <why>`). This is how the orchestrator tracks progress —
-  it costs one line, keep it current.
+  `review-clean`, `evidence-ready`, `mr-proposed <id>`, `merged`,
+  `blocked: <why>`). Handoffs may define extra milestones — including
+  gate milestones other tickets wait on — and a ticket may ship in
+  more than one MR/PR when its handoff says so. **A milestone is
+  written only after the command that justifies it has actually run**;
+  every claim in any report must trace to a command output or a file.
+- Delegating to a helper (subagent, review agent): name ONE
+  deliverable and where to deliver it; the helper must explicitly
+  declare the task finished. One nudge for a silent helper, then do
+  the work inline and record the delegation failure in STATUS.md.
+- An orchestrator line in STATUS.md (e.g. `orchestrator: <t> merged —
+  rebase`) is acted on at the next phase boundary, not ignored.
 - Findings outside the handoff's scope boundaries: STOP, record in
   STATUS.md, relay to the orchestrator. Never fix foreign territory.
 - A failing test or red CI is diagnosed to a root cause; never
-  retry-until-green.
+  retry-until-green. If a red looks unrelated to your change, verify
+  it on the untouched base commit before debugging further — the
+  environment is assumed clean, but suspicion is checked, not argued.
 
 ## Done
 
 The ticket is done when the phase map's final exit criteria hold
-(default: MR merged, ticket closed with acceptance note, STATUS.md
-final line written). Report completion in two lines: what shipped,
-and any relayed findings.
+(default: MR/PR merged, ticket closed with acceptance note, STATUS.md
+final line written). Design-only tickets end at their agreed
+deliverable instead, and **"closed as unnecessary" is a legitimate
+outcome of the design gate** — record why and close. Report completion
+in two lines: what shipped (or why nothing needed to), and any relayed
+findings.

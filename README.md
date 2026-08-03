@@ -11,9 +11,10 @@ interlocking skills:
   keyboard, parallel sessions counted once.
 - **/pipeline** — per-ticket delivery: drives one ticket session
   through the full lifecycle (intake → design → failing acceptance
-  tests → implement → review → evidence → MR → CI → merge → close)
-  with exactly two human gates: design approval and the ship
-  go-signal.
+  tests → implement → review → evidence → MR/PR → CI → merge → close),
+  stopping only at the gates the phase map marks (default: design
+  approval and the ship go-signal). Design-only tickets and "closed
+  as unnecessary" are legitimate outcomes.
 
 Project-agnostic: ticket naming (`#630`, `KL-222`, …), fetch commands,
 worktree recipes, test commands, MR conventions, and — when the

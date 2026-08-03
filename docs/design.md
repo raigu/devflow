@@ -170,13 +170,21 @@ Known limitation (stated in the report footer): thinking/reading
 without typing for longer than the gap counts as a pause; the gap is a
 flag if reality differs.
 
-## Out of scope (YAGNI)
+## Out of scope (YAGNI) — each with its reason, so none is re-proposed
 
-- No automatic estimate generation from history.
+- No automatic estimate generation from history — estimates are a
+  human judgment the user confirms; history is too thin to beat that.
 - No GitLab/Jira API integration inside the plugin — the project's own
   CLI/conventions are used via the Project facts.
-- No cross-machine/team time aggregation.
+- No cross-machine/team time aggregation — single-user tool by design.
 - No hooks, no background watchers — the orchestrator acts when spoken to.
+- **REJECTED (2026-07-24, do not re-propose): per-interaction user
+  activity logging** for time tracking — tried in the #609 practice
+  and retracted the same day; token cost not worth it. Real hours are
+  estimated from message-timestamp density instead (worktime.py).
+- **Deferred, deliberate: pass@3 racing** (three worktrees attacking
+  one frozen test contract, judge picks the winner) — a possible
+  future third skill; not built until the two-skill flow is proven.
 
 ## Addendum 2026-08-03 — devflow (v0.2)
 
@@ -201,6 +209,42 @@ plugin `devflow`** (repo `devflow-plugin/`, marketplace renamed to
 Interlock: the orchestrate HANDOFF template's section 2 changes from
 "present your phase plan" to "FIRST ACTION: run /pipeline" (manual
 fallback documented for sessions without the plugin).
+
+## Addendum 2026-08-03 — v0.3, review round
+
+Four parallel reviewers (insights-coverage, lessons-conformance,
+project-agnosticism, extensibility) audited v0.2; the user triaged
+the findings. Changes:
+
+- **Cross-ticket coordination layer** (was lost in generalization):
+  the orchestrator reacts to merges — rebase notices appended to
+  in-flight tickets' STATUS.md, append-only artifact collision check
+  (migrations/lockfiles), unblock proposals; three-kind conflict
+  model (hard / soft / append-only); merge-queue scan of open MRs/PRs
+  outside the ticket list; contended-file ownership tracked in
+  PLAN.md and passed on merge; handoff-declared gate milestones and
+  multi-MR tickets.
+- **Delegation contract** (both skills): one named deliverable per
+  helper, explicit "task finished" declaration on delivery, one nudge
+  for silence, then inline takeover with a visible failure record.
+  Staleness rule: no milestone within the threshold (Project fact,
+  default 4 working hours) → ticket shown stale, never "in progress".
+- **Extensibility wiring**: gates read from the resolved phase map
+  (no hardcoded phase numbers); concrete phase-map detection
+  convention (a CLAUDE.md section titled "Development Phases"/"Phases"
+  or explicitly so labeled); project-supplied handoff templates;
+  PLAN/TIMELOG formats specified with examples (PLAN-FORMAT.md);
+  --gap/--floor documented at the skill surface.
+- **Pipeline hardening**: base-commit check only when a red looks
+  suspicious (master assumed green — user decision); tool preflight
+  in evidence and ship phases; honest milestones (written only after
+  the justifying command ran); design-only and closed-as-unnecessary
+  outcomes; decision log re-read after compaction; browser-console-
+  before-traceback rule; review-phase fallback to self-review.
+- **Brevity + clarity ceilings**: handoff sections ≤ ~10 plain lines,
+  design-gate items ≤ 2 lines, consequence first, no unshared jargon.
+- Kept as-is per user decision: the handoff template's example
+  environment fields (test database etc.) — worded as examples, fine.
 
 ## Validation plan
 
