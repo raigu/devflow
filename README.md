@@ -23,6 +23,10 @@ interlocking skills:
   different flows on the same repo, and the shared project CLAUDE.md
   stays untouched.
 
+Scope: devflow starts at an existing ticket. Turning raw input (an
+email, a meeting note) into a ticket is deliberately outside it —
+that's your tracker's and your own issue-writing conventions' job.
+
 Project-agnostic, with per-user override. Conventions resolve in
 order: your `/adjust` config → the project's CLAUDE.md → bundled
 defaults (`skills/pipeline/PHASES.md` for the phase map). All clones

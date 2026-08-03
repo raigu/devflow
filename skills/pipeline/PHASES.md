@@ -1,8 +1,10 @@
 # Default phase model
 
-Used when the project's CLAUDE.md defines no phase map of its own.
-A project map, when present, wins verbatim — including its phase
-numbering, names, and any specialist agents it assigns per phase.
+Used when neither the user's personal PROJECT.md (written by
+`/adjust`) nor the project's CLAUDE.md defines a phase map — the
+resolution order is always PROJECT.md → project CLAUDE.md → this
+file. A found map wins verbatim — including its phase numbering,
+names, and any specialist agents it assigns per phase.
 
 Gates marked GATE are the only two points where the pipeline stops
 for the user. Everything else proceeds without asking.
@@ -10,14 +12,22 @@ for the user. Everything else proceeds without asking.
 ## 1. Intake
 
 Read the ticket (and HANDOFF.md when present). Restate the scope in
-business terms and map the blast radius — the models, views,
-templates, tests, and migrations the change will ripple through.
-When the project documents recurring defect patterns, list which
-touched spots fall under them and state the check for each.
+business terms and map the blast radius — the code paths, data
+shapes, tests, and any stored-state or schema change the fix will
+ripple through (use the project's own structural vocabulary when its
+conventions define one). When the project documents recurring defect
+patterns (PROJECT.md or CLAUDE.md), list which touched spots fall
+under them and state the check for each.
 **Exit:** scope + blast radius stated in two short paragraphs.
 
 ## 2. Design — GATE
 
+Open by challenging the premise: before designing anything, argue the
+strongest case that this ticket needs NO code — already solved,
+solvable by configuration, or not worth its cost. Dispatch the
+project's critic agent for this when the phase map names one,
+otherwise make the case yourself. "Closed as unnecessary" is a win,
+not a failure.
 Maintain a decision log (Decided / Open / Rejected — each rejection
 with its reason). Express every behaviour change as a Given/When/Then
 scenario. Present the decisions and the list of acceptance tests the
@@ -33,15 +43,20 @@ recorded. Both are legitimate ends of the pipeline.
 
 Convert the approved scenarios into failing tests following the
 project's test conventions (API-level where the UI is not the point).
+If the project has no test harness at all, agree a written manual
+verification recipe per scenario at the design gate and treat that
+recipe as the contract instead.
 **Exit:** the new tests fail for the right reason; existing suite
-still green.
+still green (or the manual recipe is written and approved).
 
 ## 4. Implement
 
 Make the contract tests green. Follow the project's coding
 conventions. A new requirement discovered mid-implementation → update
 the scenario and its test FIRST, then the code.
-**Exit:** contract tests green, project's fast test tier green.
+**Exit:** contract tests green, and the project's default test
+command green — if none is configured, detect it from the repo's
+build files, confirm it with the user once, then reuse it.
 
 ## 5. Review
 
@@ -52,15 +67,18 @@ self-review pass. Fix or explicitly accept every finding.
 
 ## 6. Evidence
 
-Open by checking the tools work (can screenshots be captured? is
-there a way to attach them?) — if not, report and agree a fallback
-BEFORE doing the phase's work. For user-visible changes: drive the
-affected screens yourself and produce an evidence pack — before/after
-screenshots, console clean, per-scenario pass/fail. Never claim a UI
-change works from code reading alone. A browser-test timeout is a JS
-error until proven otherwise: read the captured console before the
-stack trace, and an uncaught JS error fails the evidence pack.
-**Exit:** evidence pack, or an explicit "no user-visible change".
+Produce evidence in the form the change has: a terminal transcript
+for a CLI, request/response pairs for an API, before/after output for
+a library or data pipeline, before/after screenshots for a UI. Open
+by checking the needed tools work (can the evidence be captured and
+attached?) — if not, report and agree a fallback BEFORE doing the
+phase's work. Drive the affected behaviour yourself, per-scenario
+pass/fail; never claim a change works from code reading alone.
+For browser-driven UIs only: the console must be clean, and a
+browser-test timeout is a JS error until proven otherwise — read the
+captured console before the stack trace; an uncaught JS error fails
+the evidence pack.
+**Exit:** evidence pack, or an explicit "no observable change".
 
 ## 7. Ship — GATE
 
@@ -68,10 +86,13 @@ Open by checking the shipping tools work (MR/PR creation, any
 attachment upload path) — agree a fallback before starting if not.
 Commit per the project's commit conventions. Push. Create the MR/PR
 with a file-based description (never inline shell quoting of `$` or
-newlines), in the project's language. **The user's go-signal is
-required before creating/merging per the project's rules.** Then
-watch CI to green — diagnose failures, never retry blind.
-**Exit:** MR/PR merged.
+newlines), written in the project's documentation language (default:
+English). **The user's go-signal is required before creating/merging
+per the project's rules.** Then watch CI to green — diagnose
+failures, never retry blind. No CI → the project's test command run
+locally is the gate. No MR/PR flow → the exit is the approved change
+pushed to the target branch.
+**Exit:** MR/PR merged (or the no-flow equivalent above).
 
 ## 8. Close
 

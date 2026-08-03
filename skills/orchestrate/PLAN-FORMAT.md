@@ -5,6 +5,12 @@ user, by hand) can read and edit the files safely.
 
 ## PLAN.md
 
+The Project facts below are EXAMPLE answers from one project (a
+GitLab shop with its own worktree helper); yours will differ — e.g. a
+GitHub + Jira + npm project: `ticket format: KL-<n>; fetch: jira
+issue view KL-<n>`, `worktree: git worktree add ../app-KL-222 -b
+KL-222`, `MR/PR target: main   # language: English`.
+
 ```markdown
 # Orchestration: <slug>
 

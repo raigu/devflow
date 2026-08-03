@@ -18,13 +18,13 @@ continuing.
 ## 2. FIRST ACTION — run /pipeline
 
 The session's first action is invoking the `pipeline` skill (same
-plugin). It resolves the phase map (project CLAUDE.md over the
-bundled default), presents the phase plan, and WAITS for the user's
-OK before touching code. Its first phase re-verifies this handoff's
-code anchors — they go stale as the base branch moves. If the
-pipeline skill is unavailable in the session, fall back to doing the
-same by hand: numbered phases (goal + verification each), user OK
-before code.
+plugin). It resolves the phase map (personal PROJECT.md → project
+CLAUDE.md → bundled default), prints the phase plan, and runs to the
+map's first gate. Its first phase re-verifies this handoff's code
+anchors — they go stale as the base branch moves. If the pipeline
+skill is unavailable in the session, fall back to doing the same by
+hand: print numbered phases (goal + verification each), then run,
+stopping only at the gates.
 
 ## 3. Problem
 

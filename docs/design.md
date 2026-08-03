@@ -265,6 +265,50 @@ different flows. Therefore:
   through per topic; a `Development Phases` section is always a whole
   map, never a fragment.
 
+## Addendum 2026-08-03 — v0.5, second review round
+
+Two reviewers (project-agnosticism; insights-coverage) audited v0.4;
+the user approved all findings (TULD). Changes:
+
+- **De-Djangoed the default phase map**: intake blast radius in
+  stack-neutral nouns; evidence in the form the change has (terminal
+  transcript / request-response / screenshots), the JS-console rule
+  scoped to browser UIs; escape hatches for projects with no test
+  harness (manual verification recipe as the contract), no CI (local
+  test command is the gate), no MR/PR flow (push to target branch);
+  "fast test tier" → detected/confirmed default test command;
+  MR/PR text in the documentation language (default English).
+- **Third stop removed**: /pipeline prints the phase plan and runs to
+  the first gate; it waits for an OK only when the map is ambiguous
+  or the handoff demands it. Two gates means two.
+- **Phase wiring**: a phase map entry may carry `run: /<command>` or
+  name an agent — the pipeline invokes it instead of re-doing the
+  work in prose. /adjust asks per phase whether an existing command
+  covers it.
+- **Recurring defect patterns** got a home: a PROJECT.md section +
+  /adjust question; intake's defect-pattern check now has a socket.
+- **Premise challenge**: the design gate opens by arguing the ticket
+  needs no code (critic agent when the map names one) — the practice
+  that closed #613 as unnecessary is now driven, not just permitted.
+- **Auditable milestones**: each STATUS.md milestone names the
+  command that justifies it.
+- **worktime.py hardened**: `~` expansion, non-alphanumeric path
+  chars encoded, `CLAUDE_CONFIG_DIR` honored, and hard non-zero exit
+  on missing/empty sources or an empty union — a mistyped worktree
+  can no longer yield a fabricated leverage ratio.
+- **Examples labeled**: PROJECT.md / PLAN.md example facts marked as
+  one project's answers with a GitHub+Jira+npm contrast; no-tracker
+  and no-worktree modes documented; branch-safe worktree fallback
+  (`#630` → branch `630`, sibling of the repo root); resolution order
+  stated identically in all four files; bash/python3 fallbacks noted.
+- **Hooks rejection re-scoped** (recorded, not implemented): the
+  standing "no hooks, no background watchers" rejection covers
+  orchestrator polling. Lint-style defect-pattern gates were NOT
+  rejected — they are served by the Recurring defect patterns config
+  checked at intake/review; shipping actual hook files remains open
+  for a future version if prose checks prove insufficient.
+- README states the email→issue exclusion as deliberate.
+
 ## Validation plan
 
 1. `worktime.py` unit-sanity: run against the real July transcripts for

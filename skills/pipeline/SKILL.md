@@ -22,8 +22,11 @@ Resolve the phase map in this order and tell the user which applies:
 3. Otherwise the bundled default: [PHASES.md](PHASES.md).
 
 A found map is followed verbatim, including its numbering, specialist
-agents, and gates. If the map doesn't mark its gates, propose gate
-placement in the phase plan and let the user fix it.
+agents, and gates. A phase entry may name how its work is done:
+`run: /<command>` (invoke that skill/command for the phase instead of
+re-doing its job inline) or an assigned agent (dispatch it, under the
+delegation contract below). If the map doesn't mark its gates,
+propose gate placement in the phase plan and let the user fix it.
 
 Quote phase names, gates, and exit criteria from the file. Never
 paraphrase a phase rule from memory — re-read the file after any
@@ -41,9 +44,11 @@ compaction or resume, and never re-open a Decided or Rejected item.
    guardrails, documented recurring defect patterns.
 3. If a `STATUS.md` reporting contract applies, write its `started`
    line IMMEDIATELY — before any other work.
-4. Present the phase plan: the resolved phase list, each with goal +
-   verification in one line, adapted to this ticket. Wait for the
-   user's OK, then run.
+4. Print the phase plan and PROCEED — no waiting: one line naming
+   which map applies and its source file, then the phase list (goal +
+   verification in one line each, adapted to this ticket). The first
+   stop is the first GATE. Wait for an OK first ONLY when the map is
+   ambiguous (gates unmarked) or the handoff explicitly demands it.
 
 ## Running
 
@@ -59,8 +64,10 @@ compaction or resume, and never re-open a Decided or Rejected item.
   `blocked: <why>`). Handoffs may define extra milestones — including
   gate milestones other tickets wait on — and a ticket may ship in
   more than one MR/PR when its handoff says so. **A milestone is
-  written only after the command that justifies it has actually run**;
-  every claim in any report must trace to a command output or a file.
+  written only after the command that justifies it has actually run**,
+  and names that command so the line is auditable — e.g.
+  `12:05 tests-green — npm test (0 failures)`. Every claim in any
+  report must trace to a command output or a file.
 - Delegating to a helper (subagent, review agent): name ONE
   deliverable and where to deliver it; the helper must explicitly
   declare the task finished. One nudge for a silent helper, then do

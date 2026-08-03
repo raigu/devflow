@@ -21,8 +21,15 @@ files), refresh statuses, continue. Never re-ask answered questions. New orchest
 
 1. **Project facts** — resolve per the order above (ask the user only
    for gaps, and suggest `/adjust` to persist the answers): ticket ID
-   format (`#630`, `KL-222`, …) and fetch command;
-   worktree recipe (fallback: `git worktree add ../<repo>-<ticket> -b <ticket>`);
+   format (`#630`, `KL-222`, …) and fetch command (`glab issue view`,
+   `gh issue view`, `jira issue view`, …) — no tracker: a ticket is a
+   short name + description the user types once, stored in PLAN.md;
+   worktree recipe — fallback: `git worktree add <path> -b <branch>`
+   where branch = the ticket ID with non-branch-safe characters
+   stripped (`#630` → `630`) and path = a SIBLING of the repository
+   root (`git rev-parse --show-toplevel`), never relative to the
+   current directory; no-worktree projects run tickets serially in
+   place, conflict analysis reduced to ordering;
    per-ticket docs dir for HANDOFF/STATUS (fallback: worktree root);
    MR/PR target and language; staleness threshold (default 4 working
    hours). Record in PLAN.md, plus this session's own working
@@ -64,7 +71,7 @@ files), refresh statuses, continue. Never re-ask answered questions. New orchest
    ```
 
    plus one line: the session's first action is `/pipeline`, which
-   presents its phase plan and waits for OK.
+   prints its phase plan and runs to the first gate.
 
 ## Ticket events — react, don't just record
 
@@ -114,8 +121,11 @@ python3 ${CLAUDE_PLUGIN_ROOT}/scripts/worktime.py \
   orchestrator=<orchestrator workdir> <worktree paths...>
 ```
 
-`--gap` = silence that ends a work interval; `--floor` = minimum
-credit for an isolated message. Default output (the headline):
+(`python3` missing → try `python`.) `--gap` = silence that ends a
+work interval; `--floor` = minimum credit for an isolated message.
+The script EXITS NON-ZERO when a source has no transcripts or the
+union is empty — fix the path and re-run; never report a leverage
+ratio from a failed run. Default output (the headline):
 
 - **estimated total** — sum of confirmed estimates in scope
 - **real hours** — the union figure from worktime.py (activity

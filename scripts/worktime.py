@@ -24,20 +24,26 @@ import re
 import sys
 from datetime import datetime, timedelta, timezone
 
-PROJECTS_DIR = os.path.expanduser("~/.claude/projects")
+PROJECTS_DIR = os.path.join(
+    os.path.expanduser(os.environ.get("CLAUDE_CONFIG_DIR", "~/.claude")),
+    "projects")
 
 
 def encode_workdir(path):
     """Encode a working-directory path the way ~/.claude/projects does."""
-    return re.sub(r"[/._]", "-", os.path.abspath(path).rstrip("/"))
+    path = os.path.abspath(os.path.expanduser(path)).rstrip("/")
+    return re.sub(r"[^A-Za-z0-9-]", "-", path)
 
 
 def resolve_source(arg):
     """Return (label, transcript_dir) for a PATH or NAME=PATH argument."""
-    if "=" in arg and not os.path.isdir(arg):
+    if "=" in arg and not os.path.isdir(os.path.expanduser(arg)):
         label, path = arg.split("=", 1)
     else:
-        label, path = os.path.basename(os.path.abspath(arg).rstrip("/")), arg
+        label, path = arg, arg
+    path = os.path.expanduser(path)
+    if label is arg:
+        label = os.path.basename(os.path.abspath(path).rstrip("/"))
     if os.path.isdir(path) and os.path.dirname(os.path.abspath(path)) == PROJECTS_DIR:
         return label, os.path.abspath(path)
     return label, os.path.join(PROJECTS_DIR, encode_workdir(path))
@@ -138,20 +144,34 @@ def main():
     since = parse_when(args.since)
     until = parse_when(args.until, end=True)
 
-    per_source, everything = [], []
+    per_source, everything, errors = [], [], []
     for arg in args.sources:
         label, tdir = resolve_source(arg)
         if not os.path.isdir(tdir):
-            print(f"warning: no transcripts for {label} ({tdir})", file=sys.stderr)
-            per_source.append({"label": label, "messages": 0, "hours": 0.0})
+            errors.append(f"no transcript directory for {label} ({tdir}) "
+                          "— mistyped or moved path?")
+            continue
+        if not glob.glob(os.path.join(tdir, "*.jsonl")):
+            errors.append(f"transcript directory for {label} is empty ({tdir})")
             continue
         stamps = human_timestamps(tdir, since, until)
+        if not stamps:
+            print(f"warning: {label}: no human messages in the given period",
+                  file=sys.stderr)
         ivs = to_intervals(stamps, gap, floor)
         everything.extend(ivs)
         per_source.append({"label": label, "messages": len(stamps),
                            "hours": round(total_hours(ivs), 2)})
 
+    if errors:
+        for e in errors:
+            print(f"error: {e}", file=sys.stderr)
+        sys.exit(2)
+
     union = merge(everything)
+    if not union:
+        sys.exit("error: zero activity found across all sources for the "
+                 "given period — do not report a leverage ratio from this run")
     real = round(total_hours(union), 2)
     period = (union[0][0].isoformat(), union[-1][1].isoformat()) if union else (None, None)
 
