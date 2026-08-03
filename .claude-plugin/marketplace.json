@@ -1,14 +1,14 @@
 {
-  "name": "rait-tools",
+  "name": "raigu-tools",
   "owner": {
     "name": "Rait Kapp",
     "email": "raigur@gmail.com"
   },
   "plugins": [
     {
-      "name": "orchestrate",
+      "name": "devflow",
       "source": "./",
-      "description": "Ticket orchestrator: dependency-ordered development, worktree spin-offs with handoffs, progress tracking, and estimated-vs-real-hours efficiency reports."
+      "description": "Ticket orchestration (dependency-ordered development, worktree spin-offs, efficiency reports) plus a phase-driven per-ticket delivery pipeline."
     }
   ]
 }

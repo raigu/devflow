@@ -9,13 +9,16 @@ Worktree path, branch, base commit, test database, MR/PR target and
 language, project guardrails (off-limits areas, package/migration
 rules).
 
-## 2. FIRST ACTION — present your phase plan
+## 2. FIRST ACTION — run /pipeline
 
-The session must display its numbered solution phases (each phase =
-goal + how it is verified + which subagents it uses) and WAIT for the
-user's OK before touching code. Include an adaptable baseline phase
-list. First phase always re-verifies this handoff's code anchors —
-they go stale as the base branch moves.
+The session's first action is invoking the `pipeline` skill (same
+plugin). It resolves the phase map (project CLAUDE.md over the
+bundled default), presents the phase plan, and WAITS for the user's
+OK before touching code. Its first phase re-verifies this handoff's
+code anchors — they go stale as the base branch moves. If the
+pipeline skill is unavailable in the session, fall back to doing the
+same by hand: numbered phases (goal + verification each), user OK
+before code.
 
 ## 3. Problem
 

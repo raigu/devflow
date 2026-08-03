@@ -49,8 +49,8 @@ blockers as they happen — it is the memory across compaction).
    cd <worktree-path> && claude -n <ticket>-<short-slug>
    ```
 
-   plus one line on what the session will do first (present its phase
-   plan and wait for OK).
+   plus one line on what the session will do first (run `/pipeline`,
+   which presents its phase plan and waits for OK).
 
 Progress arrives via each ticket's `STATUS.md` (milestone lines, see
 template). A ticket is claimed when its `started` line exists.

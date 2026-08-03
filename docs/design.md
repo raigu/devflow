@@ -178,6 +178,30 @@ flag if reality differs.
 - No cross-machine/team time aggregation.
 - No hooks, no background watchers — the orchestrator acts when spoken to.
 
+## Addendum 2026-08-03 — devflow (v0.2)
+
+Approved extension: the plugin becomes the **development-process
+plugin `devflow`** (repo `devflow-plugin/`, marketplace renamed to
+**raigu-tools**), containing two interlocking skills:
+
+- **orchestrate** — unchanged (cross-ticket: order, spin-offs,
+  tracking, efficiency).
+- **pipeline** (new) — runs inside one ticket session and drives the
+  full lifecycle. Phase map resolution: the project's CLAUDE.md phase
+  map wins verbatim when present; otherwise the bundled
+  `skills/pipeline/PHASES.md` default (the eight phases, generalized:
+  intake → design → acceptance tests → implement → review → evidence
+  → ship → close). Exactly two human gates: design approval (end of
+  design phase, includes the failing-test contract) and the ship
+  go-signal (before MR/merge). Phase entries announced in two lines,
+  quoted from the file, never from memory. STATUS.md milestones are
+  written automatically at phase transitions, which is what the
+  orchestrator's tracking consumes.
+
+Interlock: the orchestrate HANDOFF template's section 2 changes from
+"present your phase plan" to "FIRST ACTION: run /pipeline" (manual
+fallback documented for sessions without the plugin).
+
 ## Validation plan
 
 1. `worktime.py` unit-sanity: run against the real July transcripts for

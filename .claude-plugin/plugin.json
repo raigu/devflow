@@ -1,7 +1,7 @@
 {
-  "name": "orchestrate",
-  "description": "Ticket orchestrator: tracks a set of tickets, maps dependencies, proposes development order, spins tickets off into worktree sessions with handoff files, and measures efficiency (estimated hours vs real deduplicated keyboard time).",
-  "version": "0.1.0",
+  "name": "devflow",
+  "description": "Development-process plugin: /orchestrate manages a set of tickets (dependency order, worktree spin-offs, progress tracking, estimated-vs-real-hours efficiency), /pipeline drives one ticket session through the full phase lifecycle from intake to merged MR with two human gates.",
+  "version": "0.2.0",
   "author": {
     "name": "Rait Kapp",
     "email": "raigur@gmail.com"
