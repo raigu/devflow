@@ -8,17 +8,20 @@ description: Ticket orchestrator for parallel development. Tracks an explicit li
 Turn this session into a ticket orchestrator. State lives in
 `${CLAUDE_PLUGIN_DATA}/orchestrations/<slug>/PLAN.md` (+ `TIMELOG.md`)
 — formats and example lines in [PLAN-FORMAT.md](PLAN-FORMAT.md).
-Nothing project-specific is hardcoded — learn conventions from the
-project's CLAUDE.md and record them in PLAN.md.
+Nothing project-specific is hardcoded. Conventions resolve in order:
+the user's personal config
+`${CLAUDE_PLUGIN_DATA}/projects/$(bash ${CLAUDE_PLUGIN_ROOT}/scripts/projectkey.sh)/PROJECT.md`
+(written by `/adjust`) → the project's CLAUDE.md → bundled defaults.
 
 ## Start: `/orchestrate <ticket list>` or `/orchestrate <slug>` (resume)
 
-Resume = read PLAN.md, re-check Project facts against the project's
-CLAUDE.md (never trust the cached copy over the live file), refresh
-statuses, continue. Never re-ask answered questions. New orchestration:
+Resume = read PLAN.md, re-check Project facts against the live
+PROJECT.md/CLAUDE.md (never trust the cached copy over the live
+files), refresh statuses, continue. Never re-ask answered questions. New orchestration:
 
-1. **Project facts** — from the project's CLAUDE.md (ask the user only
-   for gaps): ticket ID format (`#630`, `KL-222`, …) and fetch command;
+1. **Project facts** — resolve per the order above (ask the user only
+   for gaps, and suggest `/adjust` to persist the answers): ticket ID
+   format (`#630`, `KL-222`, …) and fetch command;
    worktree recipe (fallback: `git worktree add ../<repo>-<ticket> -b <ticket>`);
    per-ticket docs dir for HANDOFF/STATUS (fallback: worktree root);
    MR/PR target and language; staleness threshold (default 4 working

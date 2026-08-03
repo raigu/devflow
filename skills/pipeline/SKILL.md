@@ -13,13 +13,17 @@ standalone on any ticket.
 
 Resolve the phase map in this order and tell the user which applies:
 
-1. The project's CLAUDE.md, when it defines a phase map — recognized
+1. The user's personal project config, when it defines one:
+   `${CLAUDE_PLUGIN_DATA}/projects/$(bash ${CLAUDE_PLUGIN_ROOT}/scripts/projectkey.sh)/PROJECT.md`
+   (written by `/adjust`) — section `Development Phases`.
+2. The project's CLAUDE.md, when it defines a phase map — recognized
    by a section titled `Development Phases` / `Phases`, or any section
-   the CLAUDE.md itself calls the phase map. Followed verbatim,
-   including its numbering, specialist agents, and gates. If the
-   project map doesn't mark its gates, propose gate placement in the
-   phase plan and let the user fix it.
-2. Otherwise the bundled default: [PHASES.md](PHASES.md).
+   the CLAUDE.md itself calls the phase map.
+3. Otherwise the bundled default: [PHASES.md](PHASES.md).
+
+A found map is followed verbatim, including its numbering, specialist
+agents, and gates. If the map doesn't mark its gates, propose gate
+placement in the phase plan and let the user fix it.
 
 Quote phase names, gates, and exit criteria from the file. Never
 paraphrase a phase rule from memory — re-read the file after any
@@ -32,9 +36,9 @@ compaction or resume, and never re-open a Decided or Rejected item.
    it carries setup, verified anchors, hard scope boundaries, and the
    reporting contract. Re-verify its code anchors before relying on
    them; they go stale as the base branch moves.
-2. Read the project's CLAUDE.md for conventions: test commands, commit
-   rules, MR/PR target and language, guardrails, documented recurring
-   defect patterns.
+2. Read the conventions (same resolution order: PROJECT.md → project
+   CLAUDE.md): test commands, commit rules, MR/PR target and language,
+   guardrails, documented recurring defect patterns.
 3. If a `STATUS.md` reporting contract applies, write its `started`
    line IMMEDIATELY — before any other work.
 4. Present the phase plan: the resolved phase list, each with goal +

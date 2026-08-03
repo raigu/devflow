@@ -246,6 +246,25 @@ the findings. Changes:
 - Kept as-is per user decision: the handoff template's example
   environment fields (test database etc.) — worded as examples, fine.
 
+## Addendum 2026-08-03 — v0.4, /adjust and personal config
+
+Decision: per-project customization is PERSONAL, not shared — the
+project CLAUDE.md is a team file and different developers keep
+different flows. Therefore:
+
+- New third skill **/adjust**: interviews the user and writes
+  `${CLAUDE_PLUGIN_DATA}/projects/<key>/PROJECT.md` — project facts
+  plus a complete personal phase map (phase edits are applied at
+  write time; no patch syntax exists at runtime, keeping one canonical
+  mechanism).
+- **Key** = normalized git remote URL (`scripts/projectkey.sh`);
+  ssh/https converge, all clones and worktrees share the config.
+  Fallback: repo root path slug.
+- **Resolution order everywhere**: PROJECT.md (personal) → project
+  CLAUDE.md (team) → bundled defaults. Partial PROJECT.md files fall
+  through per topic; a `Development Phases` section is always a whole
+  map, never a fragment.
+
 ## Validation plan
 
 1. `worktime.py` unit-sanity: run against the real July transcripts for

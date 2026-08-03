@@ -16,11 +16,18 @@ interlocking skills:
   approval and the ship go-signal). Design-only tickets and "closed
   as unnecessary" are legitimate outcomes.
 
-Project-agnostic: ticket naming (`#630`, `KL-222`, …), fetch commands,
-worktree recipes, test commands, MR conventions, and — when the
-project defines one — the phase map itself are learned from the target
-project's CLAUDE.md at runtime. The bundled default phase model in
-`skills/pipeline/PHASES.md` applies otherwise.
+- **/adjust** — personal project configuration: an interview that
+  writes your ticket definition, worktree recipe, and custom phase map
+  (skip/add/replace phases, move gates) into per-user plugin data,
+  keyed by the project's git remote — so different developers keep
+  different flows on the same repo, and the shared project CLAUDE.md
+  stays untouched.
+
+Project-agnostic, with per-user override. Conventions resolve in
+order: your `/adjust` config → the project's CLAUDE.md → bundled
+defaults (`skills/pipeline/PHASES.md` for the phase map). All clones
+and worktrees of a repo share one config (keyed by normalized remote
+URL).
 
 ## Install
 
@@ -33,6 +40,7 @@ claude plugin install devflow@raigu-tools
 
 | Command | Effect |
 |---|---|
+| `/adjust` | Configure your personal flow for the current project (phases, ticket, worktree) |
 | `/orchestrate 630 631 634` | Start: fetch tickets, map conflicts, propose estimates + execution order |
 | `/orchestrate <slug>` | Resume an existing orchestration |
 | `spin off 631` | Worktree + HANDOFF.md + one-line session start instruction |
