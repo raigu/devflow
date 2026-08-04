@@ -37,10 +37,14 @@ compaction or resume, and never re-open a Decided or Rejected item.
 
 ## Startup
 
-1. Read `HANDOFF.md` (ticket docs dir or worktree root) if present —
-   it carries setup, verified anchors, hard scope boundaries, and the
-   reporting contract. Re-verify its code anchors before relying on
-   them; they go stale as the base branch moves.
+1. Read `HANDOFF.md` if present — at the path given as this skill's
+   argument, else in the project's ticket docs dir, else under
+   `${CLAUDE_PLUGIN_DATA}/orchestrations/*/tickets/<ticket>/` (its
+   bundled default home — handoffs and STATUS.md live OUTSIDE the
+   worktree so tooling files can't leak into commits). It carries
+   setup, verified anchors, hard scope boundaries, and the reporting
+   contract. Re-verify its code anchors before relying on them; they
+   go stale as the base branch moves.
 2. Read the conventions (same resolution order: PROJECT.md → project
    CLAUDE.md): test commands, commit rules, MR/PR target and language,
    guardrails, documented recurring defect patterns.

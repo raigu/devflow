@@ -18,7 +18,8 @@ continuing.
 ## 2. FIRST ACTION — run /pipeline
 
 The session's first action is invoking the `pipeline` skill (same
-plugin). It resolves the phase map (personal PROJECT.md → project
+plugin) with this file's path as its argument — the spin-off command
+already carries it. It resolves the phase map (personal PROJECT.md → project
 CLAUDE.md → bundled default), prints the phase plan, and runs to the
 map's first gate. Its first phase re-verifies this handoff's code
 anchors — they go stale as the base branch moves. If the pipeline
@@ -37,8 +38,10 @@ verified against.
 What is IN. What is OUT — naming the neighbouring ticket/branch that
 owns each out-of-scope area, and which contended files THIS ticket
 owns while open (ownership passes on merge, per the orchestrator's
-plan). Standing rule: a finding in foreign territory means STOP and
-report to the orchestrator, never fix.
+plan). Name too any decision this ticket must FOLLOW rather than make:
+the ticket that owns it, the milestone that will publish it, and what
+to do meanwhile. Standing rule: a finding in foreign territory means
+STOP and report to the orchestrator, never fix.
 
 ## 5. Definition of done
 

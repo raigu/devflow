@@ -32,24 +32,42 @@ files), refresh statuses, continue. Never re-ask answered questions. New orchest
    root (`git rev-parse --show-toplevel`), never relative to the
    current directory; no-worktree projects run tickets serially in
    place, conflict analysis reduced to ordering;
-   per-ticket docs dir for HANDOFF/STATUS (fallback: worktree root);
+   per-ticket docs dir for HANDOFF/STATUS (fallback:
+   `${CLAUDE_PLUGIN_DATA}/orchestrations/<slug>/tickets/<ticket>/` —
+   NEVER the worktree: tooling files must not be one `git add .` away
+   from a commit);
    MR/PR target and language; staleness threshold (default 4 working
    hours). Record in PLAN.md, plus this session's own working
    directory (needed for time attribution).
-2. **Intake** — fetch every ticket. Identify three conflict kinds:
+2. **Intake** — fetch every ticket. Identify four dependency kinds:
    **hard** (same code — run serially, one owner at a time), **soft**
    (merge-order only), **append-only** (migrations, lockfiles,
    changelogs — never conflict in-branch, collide on merge; check
-   after every merge). Also scan open MRs/PRs *outside* the list that
+   after every merge), **decision** (one ticket settles a name, a data
+   shape, an interface or a rule the others must match — no shared
+   file needed; getting it backwards costs a rewrite, not a merge
+   conflict). The first three are about files, the fourth about
+   knowledge: read it out of the ticket texts and propose it yourself,
+   never ask the user to hunt for it. Also scan open MRs/PRs *outside*
+   the list that
    touch the same areas — the merge queue is often the real
    bottleneck, not dev hours.
 3. **Scores table** — `ticket | est hrs | simp 1-5 | imp 1-5 | urg 1-5 |
-   now/defer | conflicts`. Estimates are human man-hours; propose,
-   let the user adjust, record only confirmed values. NOW/DEFER
-   guidance: NOW = broken core flow, data loss, or blocks the
-   cluster; DEFER = convenience layers the core works without.
+   now/defer | deps`. The deps cell carries every dependency from
+   intake, prefixed by kind: `hard: #632 (api_views.py)`,
+   `decides: #632 #634 (save-path contract)`. Estimates are human
+   man-hours; propose, let the user adjust, record only confirmed
+   values — put any `decides:` entry in the same pass, it changes the
+   order. NOW/DEFER guidance: NOW = broken core flow, data loss, or
+   blocks the cluster — a ticket others wait on for a decision blocks
+   the cluster; DEFER = convenience layers the core works without.
 4. **Execution graph** — parallel NOW wave, queues behind conflicts,
-   critical path. Get user approval, write PLAN.md.
+   critical path. Ordering rule: a decision dependency outranks
+   estimates and simplicity — the deciding ticket enters the wave
+   ahead of everything that must match it, and each dependant gets a
+   `gate:` line naming the milestone it waits on. A dependant too
+   urgent to wait may still go first — then say so, and name what will
+   be reworked. Get user approval, write PLAN.md.
 
 ## "spin off <ticket>"
 
@@ -63,16 +81,21 @@ files), refresh statuses, continue. Never re-ask answered questions. New orchest
    replaces the bundled one.
 3. Record in PLAN.md: the spin-off log row, and **ownership** of every
    contended file this ticket takes (`file | owner ticket | passes to`).
-   A handoff may also declare **gate milestones** — named STATUS.md
-   lines other tickets wait on — and may plan more than one MR/PR;
-   record those gates in the execution graph.
+   **Gate milestones** — named STATUS.md lines other tickets wait on —
+   run both ways. Ones the graph already assigned go into the handoff
+   as an obligation: publish the decision as its own milestone the
+   moment it is settled, never hold it until the MR/PR — a decision
+   that lands at merge time gated nothing. A handoff may also declare
+   gates of its own, and may plan more than one MR/PR; record those in
+   the execution graph.
 4. Show the user only:
 
    ```
-   cd <worktree-path> && claude -n <ticket>-<short-slug>
+   cd <worktree-path> && claude -n <ticket>-<short-slug> "/pipeline <handoff-path>"
    ```
 
-   plus one line: the session's first action is `/pipeline`, which
+   with `<handoff-path>` spelled out literally (the session must not
+   have to find it), plus one line: `/pipeline` reads that handoff,
    prints its phase plan and runs to the first gate.
 
 ## Ticket events — react, don't just record
@@ -113,7 +136,7 @@ user — silence is never read as progress.
 
 Refresh from every STATUS.md and the project's MR/issue tool, then
 render two tables — NOW and DEFERRED — columns
-`ticket | title | status | est | simp | imp | urg | conflicts`
+`ticket | title | status | est | simp | imp | urg | deps`
 (stale tickets flagged `⚠ stale <hours>h`), each table followed by its
 execution graph. Update PLAN.md statuses.
 

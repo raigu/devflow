@@ -7,10 +7,11 @@ The leverage comes from four moves:
 
 - **Plan the work** — order tickets so the ones that produce knowledge
   or architectural decisions run before the ones that depend on them.
-- **Raise the AI's output quality** — with Claude's agent teams
-  (experimental in Claude Code as of 2026 — enabled explicitly, /adjust
-  handles it), specialists challenge each other's work until it holds
-  up, so the first answer is already the reviewed one.
+- **Raise the AI's output quality** — before any code, a panel of
+  specialists tears the design apart: blind critiques, one round of
+  challenge, majority verdict. Claude's agent teams (experimental,
+  /adjust turns them on) make that argument real; off, it still runs
+  blind.
 - **Shrink your part** — the skills focus your time on defining what
   DONE means, in a form the AI actually understands. The sharper the
   DONE, the more often the AI reaches it autonomously — and with the
@@ -64,17 +65,22 @@ claude plugin install devflow@raigu-tools
 
 Claude Code ships an experimental feature most developers haven't
 discovered yet: [agent teams](https://code.claude.com/docs/en/agent-teams).
-It's off by default — but turned on, it gives a real quality boost, and
-devflow is built around it.
+It's off by default. Turned on, teammates can message each other — and
+that is what turns a review into an argument.
 
 By default Claude delegates to **subagents**: atomic workers — dispatch
-one, it works alone, returns one result. Fine for mechanical tasks,
-blind for judgment.
+one, it works alone, returns one result. devflow runs fine that way:
+several specialists critique the same design blind and the session
+merges their verdicts. But blind reviewers never catch each other's
+mistakes.
 
-**Teammates talk to each other.** Ask for a design and the pipeline
-spins up an architect, a security expert, a performance expert, a
-domain expert. The architect proposes; the security expert objects; the
-architect refines; the performance expert pushes back — until the panel
-reaches consensus. Objections that would otherwise surface in your
-review surface **before the first line of code**. Better quality on the
-first run, not the third.
+With teams on, they argue. For a non-trivial design the pipeline picks
+2–4 lenses that fit this ticket — correctness, security, performance,
+whatever the change deserves. Each reports blind, then **one** challenge
+round: they read each other's findings and attack; the challenged defend
+or concede. Hard stop — no runaway debate on your budget. Uncontested
+findings stand, contested ones need a majority, a tie gets one
+adversarial tie-break. The same panel runs on the diff at review when
+the project brings no reviewer of its own. Objections that would
+otherwise surface in your review surface **before the first line of
+code**.

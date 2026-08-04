@@ -24,9 +24,9 @@ KL-222`, `MR/PR target: main   # language: English`.
 - started: 2026-08-03
 
 ## Scores
-| ticket | est hrs | simp | imp | urg | now/defer | conflicts |
+| ticket | est hrs | simp | imp | urg | now/defer | deps |
 |---|---|---|---|---|---|---|
-| #630 | 8 | 3 | 5 | 4 | NOW | hard: #632 (api_views.py) |
+| #630 | 8 | 3 | 5 | 4 | NOW | hard: #632 (api_views.py); decides: #632 #634 (save-path contract) |
 
 ## Execution graph
 NOW, parallel: #630, #631

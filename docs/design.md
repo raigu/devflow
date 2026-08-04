@@ -73,7 +73,12 @@ ${CLAUDE_PLUGIN_DATA}/
 
 Per-ticket `HANDOFF.md` and `STATUS.md` live where the **project**
 keeps per-ticket docs (in gm-is: `sb/<ticket>/`). Fallback when the
-project defines nothing: the ticket's worktree root.
+project defines nothing:
+`${CLAUDE_PLUGIN_DATA}/orchestrations/<slug>/tickets/<ticket>/` —
+never the worktree (v0.8.x: the original worktree-root fallback put
+tooling files one `git add .` away from a commit, contradicting the
+no-trace-in-repo promise; the spin-off command now hands the session
+the literal handoff path).
 
 ## Skill behaviour
 
@@ -412,6 +417,39 @@ ticket's HANDOFF.md path. Previously-rejected-with-new-evidence case
 made (10 misses; decision-log precedent "prose rules are the weakest
 firing mechanism") — but shipping hook files to all plugin users
 needs its own design pass; not rushed into this version.
+
+v0.9.0 came out of a does-the-plugin-do-what-the-README-sells review
+(three parallel reviewers: claims, agent-teams, no-repo-trace). Three
+gaps, three fixes:
+
+1. HANDOFF.md/STATUS.md fallback moved from worktree root to
+   `${CLAUDE_PLUGIN_DATA}/orchestrations/<slug>/tickets/<ticket>/`
+   (see the amended layout note above) — the old fallback contradicted
+   "never in the repository". The spin-off command now carries the
+   literal handoff path (`claude -n <name> "/pipeline <path>"`), and
+   /pipeline reads the handoff from its argument first.
+2. The README's "Plan the work" claim (knowledge/architecture tickets
+   run first) had no implementation. Fixed in the skill, not the
+   README: intake gains a fourth dependency kind, **decision** (a
+   ticket settles a name/data shape/interface others must match — no
+   shared file needed), inferred by the AI from ticket texts and
+   confirmed in the existing estimates pass; the scores column renamed
+   `conflicts` → `deps` with `decides:` entries; the execution graph
+   gained an explicit front-loading rule (decision dependency outranks
+   estimates, escape hatch = urgent dependant may go first with the
+   rework named); the deciding ticket's handoff obliges publishing the
+   decision as a STATUS milestone when settled, and the dependant's
+   scope section names the decision it must FOLLOW. Rejected: asking
+   the user at intake (pays on every orchestration; asks the human to
+   do inference the AI just did), and walking the README claim back
+   (gives up the plugin's most valuable ordering claim).
+3. The README's agent-teams pitch oversold the protocol ("argue until
+   consensus", "built around it") — fixed in the README, not the
+   skill: TEAMWORK.md's one-challenge-round hard stop is a deliberate
+   anti-runaway decision and stays; the rewrite sells the bounded
+   round ("no runaway debate on your budget"), states the blind-
+   subagent fallback as a first-class mode, and scopes panels honestly
+   to non-trivial designs + review-without-project-reviewers.
 
 ## Validation plan
 
