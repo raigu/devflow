@@ -11,7 +11,9 @@ Turn this session into a ticket orchestrator. State lives in
 Nothing project-specific is hardcoded. Conventions resolve in order:
 the user's personal config
 `${CLAUDE_PLUGIN_DATA}/projects/$(bash ${CLAUDE_PLUGIN_ROOT}/scripts/projectkey.sh)/PROJECT.md`
-(written by `/adjust`) → the project's CLAUDE.md → bundled defaults.
+(written by `/adjust`; resolve the path in a shell first — file tools
+don't expand variables or `$(...)`) → the project's CLAUDE.md →
+bundled defaults.
 
 ## Start: `/orchestrate <ticket list>` or `/orchestrate <slug>` (resume)
 
@@ -89,6 +91,11 @@ On every merge/close/blocked signal (from STATUS.md or the tracker):
   and propose the next spin-off(s) to the user.
 
 ## Delegation and staleness
+
+Two different relationships, two different rules. Helpers THIS
+session dispatches can be nudged; spun-off ticket sessions are
+launched by the user in their own terminal and cannot — for those,
+the staleness rule below is the only signal.
 
 When dispatching any helper (subagent, reviewer, teammate session):
 name ONE deliverable and the exact FILE path to write it to — a file

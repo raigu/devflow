@@ -15,7 +15,9 @@ Resolve the phase map in this order and tell the user which applies:
 
 1. The user's personal project config, when it defines one:
    `${CLAUDE_PLUGIN_DATA}/projects/$(bash ${CLAUDE_PLUGIN_ROOT}/scripts/projectkey.sh)/PROJECT.md`
-   (written by `/adjust`) — section `Development Phases`.
+   (written by `/adjust`) — section `Development Phases`. Resolve
+   this path in a shell first (file tools don't expand variables or
+   `$(...)`), then read the file.
 2. The project's CLAUDE.md, when it defines a phase map — recognized
    by a section titled `Development Phases` / `Phases`, or any section
    the CLAUDE.md itself calls the phase map.

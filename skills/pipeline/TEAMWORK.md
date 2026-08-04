@@ -40,6 +40,12 @@ those as the panel members instead.
    only confirms the path. Helpers routinely go idle without sending
    anything — a written file makes that silence cost nothing: on the
    idle signal, read the file.
+7. **Context thrift.** All panel traffic routes through this session,
+   so keep its copy thin: full findings live in the helpers' files;
+   messages carry at most a few-line verdict. Read the files
+   selectively — never paste them whole into the session. Cap a
+   panel at 4 members; a bigger panel exhausts the window before it
+   improves the verdict.
 
 ## Model per dispatch — chosen by role, never by inheritance
 

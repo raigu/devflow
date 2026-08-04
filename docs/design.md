@@ -395,6 +395,18 @@ were dismissed with reasons (fable is real; worktime.py's human
 filter is empirically validated; whole-map-not-patch is a decided
 rule; file locking unnecessary for a single-user tool).
 
+v0.8.1 applied Gemini's remaining legitimate findings: TEAMWORK.md
+context-thrift rule (full findings in files, few-line verdicts in
+messages, panels capped at 4 — the middleman session's window is the
+scarce resource); orchestrate's delegation section now states that
+nudging applies only to helpers this session dispatched, while
+user-launched spun-off sessions are covered solely by staleness; both
+skills note that the PROJECT.md path must be resolved in a shell
+before file tools can read it. Still rejected: patch-syntax phase
+maps (contradicts the decided whole-map rule), worktime.py filter
+change (empirically validated as-is), PLAN/STATUS file locking
+(single-user, append-only).
+
 Open, deliberately deferred: a bundled SessionStart hook printing the
 ticket's HANDOFF.md path. Previously-rejected-with-new-evidence case
 made (10 misses; decision-log precedent "prose rules are the weakest
