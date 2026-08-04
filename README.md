@@ -29,6 +29,8 @@ can incorporate your custom skills and agents into the phases, with
 every adjustment stored on your side, never in the repository. Your
 fellow developers see clean commits, not your tooling.
 
+## Skills
+
 Four skills, in the order you use them:
 
 - **/adjust** — adapt the pipeline to the project, once: an interview
@@ -51,7 +53,19 @@ Conventions resolve in order: your `/adjust` config → the project's
 CLAUDE.md → bundled defaults. Full design and formats:
 [docs/design.md](docs/design.md).
 
-## Why agent teams?
+## Install
+
+```bash
+claude plugin marketplace add raigu/devflow
+claude plugin install devflow@raigu-tools
+```
+
+## Under the hood: the arguing machine
+
+Claude Code ships an experimental feature most developers haven't
+discovered yet: [agent teams](https://code.claude.com/docs/en/agent-teams).
+It's off by default — but turned on, it gives a real quality boost, and
+devflow is built around it.
 
 By default Claude delegates to **subagents**: atomic workers — dispatch
 one, it works alone, returns one result. Fine for mechanical tasks,
@@ -64,10 +78,3 @@ architect refines; the performance expert pushes back — until the panel
 reaches consensus. Objections that would otherwise surface in your
 review surface **before the first line of code**. Better quality on the
 first run, not the third.
-
-## Install
-
-```bash
-claude plugin marketplace add raigu/devflow
-claude plugin install devflow@raigu-tools
-```
